@@ -1,0 +1,207 @@
+openapi: 3.0.1
+info:
+  title: api-tool-httpbin
+  description: |
+    This is a RESTFul API for demo.
+  contact:
+    name: prabago
+    url: http://www.atc.com
+    email: prabago@minsait.com
+  version: v2
+servers:
+ -
+  url: https://localhost:8243/httpbin/v2
+security:
+ -
+  default: []
+tags:
+ -
+  name: delay
+ -
+  name: get
+paths:
+  /delay/{delay}:
+    get:
+      tags:
+       - delay
+      description: get delay timer
+      operationId: getDelay
+      parameters:
+       -
+        name: delay
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+              examples:
+                "200":
+                  value:
+                    args: {}
+                    headers:
+                      Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+                      Accept-Encoding: gzip, deflate, br
+                      Accept-Language: es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3
+                      Host: eu.httpbin.org
+                      Upgrade-Insecure-Requests: "1"
+                      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0
+                      X-Amzn-Trace-Id: Root=1-5f9329e9-0954dd7d7573930171b442db
+                    origin: 88.8.178.214
+                    url: https://eu.httpbin.org/delay
+      security:
+       -
+        default:
+         - resource:reader
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+         - oauth2
+        optional: false
+  /get:
+    get:
+      tags:
+       - get
+      description: example Get
+      operationId: getGet
+      parameters: []
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+              examples:
+                "200":
+                  value:
+                    args: {}
+                    headers:
+                      Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+                      Accept-Encoding: gzip, deflate, br
+                      Accept-Language: es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3
+                      Host: eu.httpbin.org
+                      Upgrade-Insecure-Requests: "1"
+                      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0
+                      X-Amzn-Trace-Id: Root=1-5f9329e9-0954dd7d7573930171b442db
+                    origin: 88.8.178.214
+                    url: https://eu.httpbin.org/get
+      security:
+       -
+        default:
+         - resource:reader
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+         - oauth2
+        optional: false
+components:
+  schemas:
+    response:
+      required:
+       - args
+       - headers
+       - origin
+       - url
+      type: object
+      properties:
+        args:
+          type: object
+          properties: {}
+        headers:
+          required:
+           - Accept
+           - Accept-Encoding
+           - Accept-Language
+           - Host
+           - Upgrade-Insecure-Requests
+           - User-Agent
+           - X-Amzn-Trace-Id
+          type: object
+          properties:
+            Accept:
+              minLength: 1
+              type: string
+            Accept-Encoding:
+              minLength: 1
+              type: string
+            Accept-Language:
+              minLength: 1
+              type: string
+            Host:
+              minLength: 1
+              type: string
+            Upgrade-Insecure-Requests:
+              minLength: 1
+              type: string
+            User-Agent:
+              minLength: 1
+              type: string
+            X-Amzn-Trace-Id:
+              minLength: 1
+              type: string
+        origin:
+          minLength: 1
+          type: string
+        url:
+          minLength: 1
+          type: string
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ""
+          scopes:
+            resource:reader: resource:reader
+          x-scopes-bindings:
+            resource:reader: Internal/reader
+        password:
+          tokenUrl: https://localhost:8243/token
+          scopes:
+            resource:reader: resource:reader
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+   - https://httpbin.org
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+   - http://b77943fabb7b.ngrok.io
+  type: http
+x-wso2-basePath: /httpbin/v2
+x-wso2-transports:
+ - http
+ - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300

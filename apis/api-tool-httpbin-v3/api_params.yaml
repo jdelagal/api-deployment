@@ -1,0 +1,18 @@
+environments:
+  - name: local
+    endpoints:
+      production:
+        url: https://eu.httpbin.org
+      sandbox:         
+        url: http://localhost:32769
+  - name: des
+    endpoints:
+      production:
+        url: https://httpbin.org
+      sandbox:         
+        url: http://am18co7apibus.localdomain:32769
+deploy:
+  import:
+    update: true
+    preserveProvider: true
+    

@@ -1,0 +1,87 @@
+id:
+  providerName: prabago
+  apiName: api-tool-httpbin
+  version: v2
+  id: 0
+uuid: 2c12e75d-3974-4ea3-897d-6cf9fdd76517
+type: HTTP
+context: /httpbin/v2
+contextTemplate: /httpbin/{version}
+tags: []
+documents: []
+lastUpdated: Nov 11, 2020, 1:16:48 PM
+availableTiers:
+ -
+  name: Bronze
+  displayName: Bronze
+  description: Allows 1000 requests per minute
+  requestsPerMin: 1000
+  requestCount: 1000
+  unitTime: 1
+  timeUnit: min
+  tierPlan: FREE
+  stopOnQuotaReached: true
+availableSubscriptionLevelPolicies: []
+uriTemplates: []
+apiHeaderChanged: false
+apiResourcePatternsChanged: false
+status: PUBLISHED
+technicalOwner: PABLO RABAGO RIO
+technicalOwnerEmail: prabago@minsait.com
+businessOwner: prabagodelrio@gmail.com
+businessOwnerEmail: prabagodelrio@gmail.com
+visibility: restricted
+visibleRoles: Internal/subscriber
+gatewayLabels: []
+endpointSecured: false
+endpointAuthDigest: false
+transports: http,https
+advertiseOnly: false
+subscriptionAvailability: current_tenant
+corsConfiguration:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+endpointConfig: '{"endpoint_type":"http","sandbox_endpoints":{"url":"http:\/\/b77943fabb7b.ngrok.io"},"production_endpoints":{"url":"https:\/\/httpbin.org"}}'
+responseCache: Disabled
+cacheTimeout: 300
+implementation: ENDPOINT
+authorizationHeader: Authorization
+scopes: []
+isDefaultVersion: false
+isPublishedDefaultVersion: false
+keyManagers:
+ - all
+environments:
+ - des
+ - local
+createdTime: "1605048944393"
+additionalProperties: {}
+monetizationProperties: {}
+isMonetizationEnabled: false
+environmentList:
+ - SANDBOX
+ - PRODUCTION
+apiSecurity: oauth2,oauth_basic_auth_api_key_mandatory
+endpoints: []
+enableSchemaValidation: false
+apiCategories: []
+enableStore: true
+accessControl: all
+rating: 0.0
+isLatest: true

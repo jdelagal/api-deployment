@@ -1,0 +1,328 @@
+openapi: 3.0.1
+info:
+  title: api-tool-httpbin
+  description: |
+    This is a RESTFul API for demo.
+  contact:
+    name: prabago
+    url: http://www.atc.com
+    email: prabago@minsait.com
+  version: v3
+servers:
+ -
+  url: https://localhost:8243/httpbin/v3
+security:
+ -
+  default:
+   - resource:reader
+   - resource:writer
+tags:
+ -
+  name: delay
+ -
+  name: get
+ -
+  name: put
+paths:
+  /delay/{delay}:
+    get:
+      tags:
+       - delay
+      description: get delay timer
+      operationId: getDelay
+      parameters:
+       -
+        name: delay
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+              examples:
+                "200":
+                  value:
+                    args: {}
+                    headers:
+                      Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+                      Accept-Encoding: gzip, deflate, br
+                      Accept-Language: es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3
+                      Host: eu.httpbin.org
+                      Upgrade-Insecure-Requests: "1"
+                      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0
+                      X-Amzn-Trace-Id: Root=1-5f9329e9-0954dd7d7573930171b442db
+                    origin: 88.8.178.214
+                    url: https://eu.httpbin.org/delay
+      security:
+       -
+        default:
+         - resource:reader
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+         - oauth2
+        optional: false
+  /get:
+    get:
+      tags:
+       - get
+      description: example Get
+      operationId: getGet
+      parameters: []
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+              examples:
+                "200":
+                  value:
+                    args: {}
+                    headers:
+                      Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+                      Accept-Encoding: gzip, deflate, br
+                      Accept-Language: es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3
+                      Host: eu.httpbin.org
+                      Upgrade-Insecure-Requests: "1"
+                      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0
+                      X-Amzn-Trace-Id: Root=1-5f9329e9-0954dd7d7573930171b442db
+                    origin: 88.8.178.214
+                    url: https://eu.httpbin.org/get
+      security:
+       -
+        default:
+         - resource:reader
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+         - oauth2
+        optional: false
+  /put:
+    put:
+      tags:
+       - put
+      summary: Put Operation
+      description: prueba
+      operationId: put-put
+      parameters: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responsePut'
+              examples:
+                "200":
+                  value:
+                    args: {}
+                    data: ""
+                    files: {}
+                    form: {}
+                    headers:
+                      Accept: application/json
+                      Accept-Encoding: gzip, deflate, br
+                      Accept-Language: es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3
+                      Content-Length: "0"
+                      Host: httpbin.org
+                      Origin: https://httpbin.org
+                      Referer: https://httpbin.org/
+                      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0
+                      X-Amzn-Trace-Id: Root=1-5f985491-4abedfb27f6436d159d73789
+                    json: null
+                    origin: 88.15.50.177
+                    url: https://httpbin.org/put
+      security:
+       -
+        default:
+         - resource:writer
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+      x-wso2-application-security:
+        security-types:
+         - oauth2
+        optional: false
+components:
+  schemas:
+    response:
+      required:
+       - args
+       - headers
+       - origin
+       - url
+      type: object
+      properties:
+        args:
+          type: object
+          properties: {}
+        headers:
+          required:
+           - Accept
+           - Accept-Encoding
+           - Accept-Language
+           - Host
+           - Upgrade-Insecure-Requests
+           - User-Agent
+           - X-Amzn-Trace-Id
+          type: object
+          properties:
+            Accept:
+              minLength: 1
+              type: string
+            Accept-Encoding:
+              minLength: 1
+              type: string
+            Accept-Language:
+              minLength: 1
+              type: string
+            Host:
+              minLength: 1
+              type: string
+            Upgrade-Insecure-Requests:
+              minLength: 1
+              type: string
+            User-Agent:
+              minLength: 1
+              type: string
+            X-Amzn-Trace-Id:
+              minLength: 1
+              type: string
+        origin:
+          minLength: 1
+          type: string
+        url:
+          minLength: 1
+          type: string
+    responsePut:
+      required:
+       - data
+       - files
+       - form
+       - headers
+       - origin
+       - url
+      type: object
+      properties:
+        args:
+          type: object
+        data:
+          type: string
+        files:
+          type: object
+        form:
+          type: object
+        headers:
+          required:
+           - Accept
+           - Accept-Encoding
+           - Accept-Language
+           - Content-Length
+           - Host
+           - Origin
+           - Referer
+           - User-Agent
+           - X-Amzn-Trace-Id
+          type: object
+          properties:
+            Accept:
+              minLength: 1
+              type: string
+            Accept-Encoding:
+              minLength: 1
+              type: string
+            Accept-Language:
+              minLength: 1
+              type: string
+            Content-Length:
+              minLength: 1
+              type: string
+            Host:
+              minLength: 1
+              type: string
+            Origin:
+              minLength: 1
+              type: string
+            Referer:
+              minLength: 1
+              type: string
+            User-Agent:
+              minLength: 1
+              type: string
+            X-Amzn-Trace-Id:
+              minLength: 1
+              type: string
+        json: {}
+        origin:
+          minLength: 1
+          type: string
+        url:
+          minLength: 1
+          type: string
+      x-tags:
+       - put
+  securitySchemes:
+    default:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: ""
+          scopes:
+            resource:writer: writer
+            resource:reader: Internal/reader
+          x-scopes-bindings:
+            resource:reader: Internal/reader
+            resource:writer: Internal/writer
+        password:
+          tokenUrl: https://localhost:8243/token
+          scopes:
+            resource:reader: Internal/reader
+            resource:writer: Internal/writer
+    Bearer:
+      type: http
+      scheme: bearer
+x-wso2-auth-header: Authorization
+x-wso2-cors:
+  corsConfigurationEnabled: false
+  accessControlAllowOrigins:
+   - '*'
+  accessControlAllowCredentials: false
+  accessControlAllowHeaders:
+   - authorization
+   - Access-Control-Allow-Origin
+   - Content-Type
+   - SOAPAction
+   - apikey
+   - testKey
+  accessControlAllowMethods:
+   - GET
+   - PUT
+   - POST
+   - DELETE
+   - PATCH
+   - OPTIONS
+x-wso2-production-endpoints:
+  urls:
+   - https://eu.httpbin.org
+  type: http
+x-wso2-sandbox-endpoints:
+  urls:
+   - http://localhost:4010
+  type: http
+x-wso2-basePath: /httpbin/v2/v3
+x-wso2-transports:
+ - https
+x-wso2-response-cache:
+  enabled: false
+  cacheTimeoutInSeconds: 300

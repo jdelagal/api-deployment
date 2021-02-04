@@ -1,0 +1,139 @@
+{
+  "id": 22,
+  "name": "sandbox-app",
+  "uuid": "e515995f-53e3-4225-b41c-78a897f2de19",
+  "subscriber": {
+    "name": "adminatc",
+    "id": 1,
+    "tenantId": 0
+  },
+  "subscribedAPIs": [
+    {
+      "subscriptionId": 142,
+      "tier": {
+        "name": "Bronze",
+        "displayName": "Bronze",
+        "requestsPerMin": 0,
+        "requestCount": 0,
+        "unitTime": 0,
+        "timeUnit": "ms",
+        "stopOnQuotaReached": true
+      },
+      "subscriber": {
+        "name": "adminatc@int.atc",
+        "id": 61,
+        "tenantId": 0
+      },
+      "apiId": {
+        "providerName": "adminatc-AT-int.atc",
+        "apiName": "api-tool-httpbin",
+        "version": "v2",
+        "id": 0
+      },
+      "application": {
+        "id": 0,
+        "name": "sandbox-app",
+        "uuid": "767bdd6d-c5d9-442e-aead-dda620b98fc0",
+        "subscriber": {
+          "name": "adminatc@int.atc",
+          "id": 61,
+          "tenantId": 0
+        },
+        "subscribedAPIs": [],
+        "keys": [],
+        "keyManagerWiseOAuthApp": {},
+        "applicationAttributes": {},
+        "subscriptionCount": 0
+      },
+      "subStatus": "UNBLOCKED",
+      "subCreatedStatus": "SUBSCRIBE",
+      "keys": [],
+      "uuid": "384c5d9e-0572-4190-8da5-a0deb6be1f9a",
+      "isBlocked": false
+    },
+    {
+      "subscriptionId": 21,
+      "tier": {
+        "name": "Bronze",
+        "displayName": "Bronze",
+        "requestsPerMin": 0,
+        "requestCount": 0,
+        "unitTime": 0,
+        "timeUnit": "ms",
+        "stopOnQuotaReached": true
+      },
+      "subscriber": {
+        "name": "adminatc",
+        "id": 1,
+        "tenantId": 0
+      },
+      "apiId": {
+        "providerName": "prabago",
+        "apiName": "api-tool-httpbin",
+        "version": "v2",
+        "id": 0
+      },
+      "application": {
+        "id": 0,
+        "name": "sandbox-app",
+        "uuid": "e515995f-53e3-4225-b41c-78a897f2de19",
+        "subscriber": {
+          "name": "adminatc",
+          "id": 1,
+          "tenantId": 0
+        },
+        "subscribedAPIs": [],
+        "keys": [],
+        "keyManagerWiseOAuthApp": {},
+        "applicationAttributes": {},
+        "subscriptionCount": 0
+      },
+      "subStatus": "UNBLOCKED",
+      "subCreatedStatus": "SUBSCRIBE",
+      "keys": [],
+      "uuid": "ea6a9853-fd16-4ff1-98f9-a16ddb838209",
+      "isBlocked": false
+    }
+  ],
+  "keys": [],
+  "keyManagerWiseOAuthApp": {
+    "SANDBOX": {
+      "Resident Key Manager": {
+        "clientId": "9QONUN8kR0I8gqNWOgA0ENlewCoa",
+        "clientName": "adminatc_sandbox-app_SANDBOX",
+        "callBackURL": "null",
+        "clientSecret": "cUNRVmp3eW0wdUROWDJVVlJzQ3phZ3hWNnRZYQ\u003d\u003d",
+        "parameters": {
+          "grant_types": "refresh_token urn:ietf:params:oauth:grant-type:saml2-bearer password client_credentials iwa:ntlm urn:ietf:params:oauth:grant-type:device_code urn:ietf:params:oauth:grant-type:jwt-bearer",
+          "redirect_uris": "null",
+          "client_name": "adminatc_sandbox-app_SANDBOX"
+        },
+        "isSaasApplication": false,
+        "appAttributes": {}
+      }
+    },
+    "PRODUCTION": {
+      "Resident Key Manager": {
+        "clientId": "U9oTprNPtuXQkMG51F4BaF_RIRYa",
+        "clientName": "adminatc_sandbox-app_PRODUCTION",
+        "callBackURL": "null",
+        "clientSecret": "dkJvV2N1NlFGSzAxeENyNFhoMUhvaWZ4VXZVYQ\u003d\u003d",
+        "parameters": {
+          "grant_types": "refresh_token urn:ietf:params:oauth:grant-type:saml2-bearer password client_credentials iwa:ntlm urn:ietf:params:oauth:grant-type:device_code urn:ietf:params:oauth:grant-type:jwt-bearer",
+          "redirect_uris": "null",
+          "client_name": "adminatc_sandbox-app_PRODUCTION"
+        },
+        "isSaasApplication": false,
+        "appAttributes": {}
+      }
+    }
+  },
+  "tier": "Unlimited",
+  "description": "sandbox-app",
+  "status": "APPROVED",
+  "groupId": "",
+  "owner": "adminatc",
+  "applicationAttributes": {},
+  "tokenType": "JWT",
+  "subscriptionCount": 0
+}

@@ -1,0 +1,1034 @@
+{
+	"info": {
+		"_postman_id": "e38285ca-d0fb-4501-83fc-10661d84a549",
+		"name": "api-tool-httpbin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "v2",
+			"item": [
+				{
+					"name": "Generate AccesToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2d5e635b-ae6d-4f3c-bfae-a20be21bd192",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+									"pm.collectionVariables.set(\"scope\", jsonData.scope);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "iOTqjA_20hbJ_YnIT5QqhxWAGLka",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Kx2gg27fFoMdHVgUuf738kHr4Bka",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic cEJ6dUlaaEdwaGZRbWRjVVgwbG5lRmlpdXh3YTo0U0pnV19qTU56aGpIU284OGJuZVhtTnFNMjRh"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "gauss",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "resource:reader",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/token",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELAY",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a2f5a5c6-eefb-4da5-9d53-4459d4be24e9",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4cc4604a-e276-4e5d-bf8f-0fa8718df288",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v2/delay/1",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v2",
+								"delay",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0e0ebb63-a78a-43c1-823b-e040d3ec2a4b",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "08b09309-6c5b-4ebb-a401-eb31aa81361d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v2/get",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v2",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate AccesToken without scope",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc290fc3-edcf-4ee3-8970-059517308131",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+									"pm.collectionVariables.set(\"scope\", jsonData.scope);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "iOTqjA_20hbJ_YnIT5QqhxWAGLka",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Kx2gg27fFoMdHVgUuf738kHr4Bka",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic cEJ6dUlaaEdwaGZRbWRjVVgwbG5lRmlpdXh3YTo0U0pnV19qTU56aGpIU284OGJuZVhtTnFNMjRh"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "adminatc",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Atc01.",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/token",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELAY with scope",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "66a6dc4e-36f2-461e-b819-a7858e3bc931",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body contains error, message and description\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"code\");",
+									"  pm.expect(pm.response.text()).to.include(\"message\");",
+									"  pm.expect(pm.response.text()).to.include(\"description\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a9a44be7-f663-4f35-8bbe-78171e636d20",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbkBjYXJib24uc3VwZXIiLCJhdWQiOiI4dHo2TGY0bG5lR0pjd3J5eWJ3WlVVajJmaDhhIiwibmJmIjoxNjAyMDE3OTk0LCJhenAiOiI4dHo2TGY0bG5lR0pjd3J5eWJ3WlVVajJmaDhhIiwic2NvcGUiOiJhbV9hcHBsaWNhdGlvbl9zY29wZSBkZWZhdWx0IiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDo5NDQzXC9vYXV0aDJcL3Rva2VuIiwiZXhwIjoxNjAyMDIxNTk0LCJpYXQiOjE2MDIwMTc5OTQsImp0aSI6Ijg5YTM2NWU5LTlhMjktNDk5NC04MTZlLTU2YTE0YmM2MzMxOSJ9.lFWf9W4wXEg49h-oP5Zj6csVMYpy4lwR_jrkboqrYZcgVnLDPdafkQ1N6Msn4XjwfjTPsJFxuM3SQn5_HDhP1sjGF0fGRA-fLx2ENpqwru_WFZTE-Tq94mGLPebv9JisXI2Nww9gOAWlSJGUeWmtOXg8feKgK9O_vc-SZ8ES1Oq93zxe1XpTvX6dQAUTh9-yJjszWoeKOsyd4Pw-tyYjBkRigtAiLRyKpI6y9Sdf_6KyESPrwOJfY5VKyu0vNNn2kfxvOO_uwGYr5gdozzajXc4iTgIQYTBE5I9Fjl-WqZUyua58ix8beGuvPui5slnoOZbYovWnFiHwrPSxALgyoA",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v2/delay/1",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v2",
+								"delay",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET with scope",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "148a1c0e-4719-4410-a916-5cf32687e1c5",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Body contains error, message and description\",() => {",
+									"  pm.expect(pm.response.text()).to.include(\"code\");",
+									"  pm.expect(pm.response.text()).to.include(\"message\");",
+									"  pm.expect(pm.response.text()).to.include(\"description\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "03af4db2-00a4-445e-9503-2f6df7be1d36",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJhZG1pbkBjYXJib24uc3VwZXIiLCJhdWQiOiI4dHo2TGY0bG5lR0pjd3J5eWJ3WlVVajJmaDhhIiwibmJmIjoxNjAyMDE3OTk0LCJhenAiOiI4dHo2TGY0bG5lR0pjd3J5eWJ3WlVVajJmaDhhIiwic2NvcGUiOiJhbV9hcHBsaWNhdGlvbl9zY29wZSBkZWZhdWx0IiwiaXNzIjoiaHR0cHM6XC9cL2xvY2FsaG9zdDo5NDQzXC9vYXV0aDJcL3Rva2VuIiwiZXhwIjoxNjAyMDIxNTk0LCJpYXQiOjE2MDIwMTc5OTQsImp0aSI6Ijg5YTM2NWU5LTlhMjktNDk5NC04MTZlLTU2YTE0YmM2MzMxOSJ9.lFWf9W4wXEg49h-oP5Zj6csVMYpy4lwR_jrkboqrYZcgVnLDPdafkQ1N6Msn4XjwfjTPsJFxuM3SQn5_HDhP1sjGF0fGRA-fLx2ENpqwru_WFZTE-Tq94mGLPebv9JisXI2Nww9gOAWlSJGUeWmtOXg8feKgK9O_vc-SZ8ES1Oq93zxe1XpTvX6dQAUTh9-yJjszWoeKOsyd4Pw-tyYjBkRigtAiLRyKpI6y9Sdf_6KyESPrwOJfY5VKyu0vNNn2kfxvOO_uwGYr5gdozzajXc4iTgIQYTBE5I9Fjl-WqZUyua58ix8beGuvPui5slnoOZbYovWnFiHwrPSxALgyoA",
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman."
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v2/get",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v2",
+								"get"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "v3",
+			"item": [
+				{
+					"name": "Generate AccesToken Reader Scope",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "89335b1f-5d41-427a-a3b1-f5ac64ca2bd4",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+									"pm.collectionVariables.set(\"scope\", jsonData.scope);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "iOTqjA_20hbJ_YnIT5QqhxWAGLka",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Kx2gg27fFoMdHVgUuf738kHr4Bka",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic cEJ6dUlaaEdwaGZRbWRjVVgwbG5lRmlpdXh3YTo0U0pnV19qTU56aGpIU284OGJuZVhtTnFNMjRh"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "gauss",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "resource:reader",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/token",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Delay",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d625837-aa2b-45c5-99db-16c2d47b0ab4",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v3/delay/1",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v3",
+								"delay",
+								"1"
+							]
+						},
+						"description": "get delay timer"
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/delay/:delay",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"delay",
+										":delay"
+									],
+									"variable": [
+										{
+											"key": "delay"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"args\": {},\n \"headers\": {\n  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Accept-Language\": \"es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3\",\n  \"Host\": \"eu.httpbin.org\",\n  \"Upgrade-Insecure-Requests\": \"1\",\n  \"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0\",\n  \"X-Amzn-Trace-Id\": \"Root=1-5f9329e9-0954dd7d7573930171b442db\"\n },\n \"origin\": \"88.8.178.214\",\n \"url\": \"https://eu.httpbin.org/delay\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get Get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9cc53346-7ad2-456c-b39c-19b6f2a20255",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v3/get",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v3",
+								"get"
+							]
+						},
+						"description": "example Get"
+					},
+					"response": [
+						{
+							"name": "ok",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/get",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"get"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"args\": {},\n \"headers\": {\n  \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Accept-Language\": \"es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3\",\n  \"Host\": \"eu.httpbin.org\",\n  \"Upgrade-Insecure-Requests\": \"1\",\n  \"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0\",\n  \"X-Amzn-Trace-Id\": \"Root=1-5f9329e9-0954dd7d7573930171b442db\"\n },\n \"origin\": \"88.8.178.214\",\n \"url\": \"https://eu.httpbin.org/get\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Put Operation - 403",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "92a6c5f3-71b5-47a6-8017-0eb42d435943",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v3/put",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v3",
+								"put"
+							]
+						},
+						"description": "prueba"
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/put",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"args\": {},\n \"data\": \"\",\n \"files\": {},\n \"form\": {},\n \"headers\": {\n  \"Accept\": \"application/json\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Accept-Language\": \"es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3\",\n  \"Content-Length\": \"0\",\n  \"Host\": \"httpbin.org\",\n  \"Origin\": \"https://httpbin.org\",\n  \"Referer\": \"https://httpbin.org/\",\n  \"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0\",\n  \"X-Amzn-Trace-Id\": \"Root=1-5f985491-4abedfb27f6436d159d73789\"\n },\n \"json\": null,\n \"origin\": \"88.15.50.177\",\n \"url\": \"https://httpbin.org/put\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Generate AccesToken Writer Scope",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "42d93c8d-f3e6-44b8-9006-3dca42ad0758",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);",
+									"pm.collectionVariables.set(\"scope\", jsonData.scope);",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "iOTqjA_20hbJ_YnIT5QqhxWAGLka",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Kx2gg27fFoMdHVgUuf738kHr4Bka",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic cEJ6dUlaaEdwaGZRbWRjVVgwbG5lRmlpdXh3YTo0U0pnV19qTU56aGpIU284OGJuZVhtTnFNMjRh"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "nobel",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "resource:writer",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/token",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put Operation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4f990c3d-7cf0-45a4-8dbf-610cb3055f76",
+								"exec": [
+									"jsonData = pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://{{api-gateway}}:{{port}}/httpbin/v3/put",
+							"protocol": "https",
+							"host": [
+								"{{api-gateway}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"httpbin",
+								"v3",
+								"put"
+							]
+						},
+						"description": "prueba"
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"description": {
+											"content": "Added as a part of security scheme: oauth2",
+											"type": "text/plain"
+										},
+										"key": "Authorization",
+										"value": "<token>"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/put",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"put"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"args\": {},\n \"data\": \"\",\n \"files\": {},\n \"form\": {},\n \"headers\": {\n  \"Accept\": \"application/json\",\n  \"Accept-Encoding\": \"gzip, deflate, br\",\n  \"Accept-Language\": \"es-ES,en;q=0.8,es;q=0.5,en-US;q=0.3\",\n  \"Content-Length\": \"0\",\n  \"Host\": \"httpbin.org\",\n  \"Origin\": \"https://httpbin.org\",\n  \"Referer\": \"https://httpbin.org/\",\n  \"User-Agent\": \"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:82.0) Gecko/20100101 Firefox/82.0\",\n  \"X-Amzn-Trace-Id\": \"Root=1-5f985491-4abedfb27f6436d159d73789\"\n },\n \"json\": null,\n \"origin\": \"88.15.50.177\",\n \"url\": \"https://httpbin.org/put\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"variable": [
+		{
+			"id": "7cc3d5a2-69d6-482f-909a-f39a131d5a88",
+			"key": "access_token",
+			"value": "eyJ4NXQiOiJNell4TW1Ga09HWXdNV0kwWldObU5EY3hOR1l3WW1NNFpUQTNNV0kyTkRBelpHUXpOR00wWkdSbE5qSmtPREZrWkRSaU9URmtNV0ZoTXpVMlpHVmxOZyIsImtpZCI6Ik16WXhNbUZrT0dZd01XSTBaV05tTkRjeE5HWXdZbU00WlRBM01XSTJOREF6WkdRek5HTTBaR1JsTmpKa09ERmtaRFJpT1RGa01XRmhNelUyWkdWbE5nX1JTMjU2IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJnYXVzcyIsImF1ZCI6Ikt4MmdnMjdmRm9NZEhWZ1V1ZjczOGtIcjRCa2EiLCJuYmYiOjE2MDQ2MTQ5MjIsImF6cCI6Ikt4MmdnMjdmRm9NZEhWZ1V1ZjczOGtIcjRCa2EiLCJzY29wZSI6InJlc291cmNlOnJlYWRlciIsImlzcyI6Imh0dHBzOlwvXC9sb2NhbGhvc3Q6OTQ0M1wvb2F1dGgyXC90b2tlbiIsImV4cCI6MTYwNDYxODUyMiwiaWF0IjoxNjA0NjE0OTIyLCJqdGkiOiI5OTA3MWY1Ni1iYzg2LTQ5N2MtOWQ4My0yMDM2NGVlMWQ3OGQifQ.Lt2T88-Sr5Inkl2sPh1k4lVC86Inhr8rwpezojnWaH0wTDOvMDo0_y4oNBTURoXxqZx6TU91nRhLfNtqF7MqhWRs1S7OUfYq4d_LBLkI9NmNgLpgP1mJCmWF5364UfLezFx1A9teYgsifD9Y5eHsnvZ4LxLyn24VI1qfzuEfrvO6oLZTjmm3wZ0LnKmpsbtbG4U1fxyFbk01NdO8GAgW-hYpPgupmLvqTfCmO7TJpRyOtHdVNKZ90OmCfenBWiblwQr4ppzEzcTO-kaNPHyPEnZ865dUBdEpSi9fdLqrbqBaA11I9paVuYBqw9Fk0Ij_bXpsmZaDjQ-kMS0zsKqx7g"
+		},
+		{
+			"id": "9c72fe36-a1b6-41ad-b2be-fc3fcc86b612",
+			"key": "scope",
+			"value": "resource:reader"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

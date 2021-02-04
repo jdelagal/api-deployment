@@ -1,0 +1,209 @@
+pipeline {
+    agent any
+    tools {nodejs "node"}
+
+       environment {
+        API_NAME = 'api-tool-httpbin'
+        API_DIR = './apis'
+        APP_DIR = './apps'
+        API_BCK = '/var/lib/jenkins/.wso2apictl/exported/apis/'
+        API_BACKUP = 'false'
+        DEPLOY = 'false'
+        ICON = ":indra:"
+        TENANT= ""
+    }
+     parameters { choice(name: 'DEV_ENV', choices: ['local', 'des', 'int.atc'], description: '') 
+     choice(name: 'API_VER', choices: ['v1', 'v2', 'v3'], description: '')
+     }
+    stages {
+            stage('Check Deployment') {
+            steps {
+                echo "API_VER---> ${API_VER}"
+                echo "DEV_ENV---> ${DEV_ENV}"
+                
+                echo 'Logging into ${$DEV_ENV}'
+                withCredentials([usernamePassword(credentialsId: 'apim_dev', usernameVariable: 'DEV_USERNAME', passwordVariable: 'DEV_PASSWORD')]) {
+                    sh 'apictl login $DEV_ENV -u $DEV_USERNAME$TENANT -p $DEV_PASSWORD -k'                        
+                }
+                script{
+                if (DEV_ENV != 'local'){
+                        ICON = ':atc:'
+                }   
+                def repoUrl = checkout(scm).GIT_URL
+                def reponame = repoUrl.tokenize('/')[3]
+                reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+                echo "The reponame is: ${reponame}"
+                slackSend (color: '#5788d5', message: "INICIADO SLAVE-ENTORNO [${DEV_ENV} ${ICON}]--> [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :rocket:")
+                
+                def API_DPL = sh(script: "apictl list apis -e $DEV_ENV |  awk \'{print \$2\"-\"\$3}\' | grep $API_NAME-$API_VER | tr -d '\r'", returnStdout: true).trim()
+                def API_FINAL = "$API_NAME-$API_VER"
+                
+                if (API_DPL == API_FINAL ){
+                   API_BACKUP = 'true'
+                }
+                    echo "API_BACKUP---> ${API_BACKUP}"
+                }
+            }
+        }
+        stage('Run mock-server') {
+            environment{
+                MOCK_PORT = sh(script: 'find $API_DIR/$API_NAME-$API_VER -name "api_params.yaml" -print | xargs grep "localhost:" | head -1 | awk -F: \'{print \$4}\'', , returnStdout: true).trim()
+               }
+            steps {
+
+               echo "MOCK_PORT---> ${MOCK_PORT}"
+                sh 'docker ps -f name=$API_NAME-$API_VER  -q | xargs --no-run-if-empty docker container stop'
+                sh 'docker container ls -a -fname=$API_NAME-$API_VER -q | xargs -r docker container rm'
+                sh 'docker run --init --rm -it -d --name $API_NAME-$API_VER -p $MOCK_PORT:4010 -v $(pwd):/tmp -P stoplight/prism:4 mock  -h 0.0.0.0  "/tmp/apis/$API_NAME-$API_VER/Meta-information/swagger.yaml"'
+            }
+        }
+         stage('Check OpenAPI Spectral Lint') {
+            steps {
+            sh 'git submodule foreach git checkout master'
+            sh 'git submodule foreach git pull'
+
+                script {
+            try {
+                sh 'spectral lint "./apis/$API_NAME/Meta-information/swagger.yaml" -r ./apim-arq/rules/atc-spectral.yaml --format junit --output ./report.xml'
+            } catch(err) {
+                step([$class: 'JUnitResultArchiver', testResults: './report.xml'])
+                 currentBuild.result = 'FAILURE'
+                throw err
+                def repoUrl = checkout(scm).GIT_URL
+                def reponame = repoUrl.tokenize('/')[3]
+                reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+                slackSend (color: '#ee5c5c', message: "FINALIZADO SLAVE-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [${currentBuild.currentResult}] ETAPA:[CODE REVIEW] ] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :flashlight: :x:")
+            }
+             }
+            }
+        }
+
+       
+
+
+
+        stage('Backup API') {
+            when {
+              expression { API_BACKUP == 'true' }
+             }
+            steps {
+                sh 'apictl export-api -n $API_NAME -v $API_VER -e $DEV_ENV -k --verbose'
+            }
+        }
+            stage('Despliegue APIS') {
+            environment{
+                RETRY = '80'
+            }
+            steps {
+                script {
+                echo "Import APIs to ${DEV_ENV}"
+                 if (DEV_ENV == 'int.atc'){
+                sh 'apictl import-api -f $API_DIR/$API_NAME-$API_VER -e $DEV_ENV -k --preserve-provider=false --update --verbose'}
+                else{
+                 sh 'apictl import-api -f $API_DIR/$API_NAME-$API_VER -e $DEV_ENV -k --preserve-provider --update --verbose'   
+                }
+                }
+            }
+             post
+            {
+                 failure {
+                     script {
+                    if (API_BACKUP == 'true'){
+                        if (DEV_ENV == 'int.atc'){
+                            sh 'apictl import-api -f $API_DIR/$API_NAME-$API_VER -e $DEV_ENV -k --preserve-provider=false --update --verbose'}
+                         else{
+                            sh 'apictl import-api -f $API_DIR/$API_NAME-$API_VER -e $DEV_ENV -k --preserve-provider --update --verbose'   
+                        }
+                    }
+                        def repoUrl = checkout(scm).GIT_URL
+                        def reponame = repoUrl.tokenize('/')[3]
+                        reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+                        slackSend (color: '#ee5c5c', message: "FINALIZADO SLAVE-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [${currentBuild.currentResult}] ETAPA:[DESPLIEGUE] ] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :rocket: :x:")
+            }
+        
+        }
+            }
+        }
+
+        stage('Despliegue APPs') {
+            steps {
+                script {
+                echo "Import APPs to ${DEV_ENV}"
+                if (DEV_ENV == 'int.atc'){
+                  sh 'apictl import-app -f $APP_DIR/tenant/* -e $DEV_ENV -k --preserveOwner --update --verbose --skipCleanup'}
+                else{
+                   sh 'apictl import-app -f $APP_DIR/* -e $DEV_ENV -k --preserveOwner --update --verbose'
+                }
+                }
+
+            }
+            
+        }
+
+        stage('Ejecución de Tests contra Sandbox') {
+            steps {
+                echo 'Running tests in ${DEV_ENV}'
+                sh 'newman run ./tests/$API_NAME-${API_VER}.postman_collection.json  -e ./tests/$DEV_ENV.postman_environment.json --reporters cli,junit,htmlextra --reporter-junit-export "postman.xml" -n 1 --reporter-htmlextra-export "newman/postman.html" --insecure --bail' 
+                sh 'zip -q postman_report-$API_NAME-${API_VER}-${DEV_ENV} ./newman/postman.html'
+                withCredentials([string(credentialsId: 'slack-bot', variable: 'TOKEN')]) {
+                    sh 'curl -F token=$TOKEN -F channels=api-atc -F text=Hello -F username=jenkins -F file=@postman_report-$API_NAME-${API_VER}-${DEV_ENV}.zip https://slack.com/api/files.upload'                       
+                        
+                }
+            }
+            post
+            {
+            success {
+                junit '*.xml'
+                publishHTML (target: [
+                  allowMissing: false,
+                  alwaysLinkToLastBuild: false,
+                  keepAll: true,
+                  reportDir: 'newman',
+                  reportFiles: 'postman.html',
+                  reportName: "postman-test"
+                ])
+             }
+            failure {
+                
+                junit '*.xml'
+                publishHTML (target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'newman',
+                reportFiles: 'report.html',
+                reportName: "postman-test"
+               ])
+                   script {
+                       if (API_BACKUP == 'true'){
+                           sh 'apictl import-api -f ${API_BCK}/${DEV_ENV}/${API_NAME}_${API_VER}.zip -e $DEV_ENV -k --preserve-provider --update --verbose'
+                       }
+                      
+                        
+                        def repoUrl = checkout(scm).GIT_URL
+                        def reponame = repoUrl.tokenize('/')[3]
+                        reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+                        sh 'zip -q postman_report-$API_NAME-${API_VER}-${DEV_ENV} ./newman/postman.html'
+                        slackSend (color: '#ee5c5c', message: "FINALIZADO SLAVE-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [${currentBuild.currentResult}] ETAPA:[TESTING] ] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :test_tube: :x:")
+                          withCredentials([string(credentialsId: 'slack-bot', variable: 'TOKEN')]) {
+                        sh 'curl -F token=$TOKEN -F channels=api-atc -F text=Hello -F username=jenkins -F file=@postman_report-$API_NAME-${API_VER}-${DEV_ENV}.zip https://slack.com/api/files.upload'                       
+                        }
+                       }
+        }
+            }
+        }
+    }
+    post {
+    
+    success {
+        script {
+                def repoUrl = checkout(scm).GIT_URL
+                def reponame = repoUrl.tokenize('/')[3]
+                reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+            slackSend (color: '#346b09', message: "FINALIZADO SLAVE-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [${currentBuild.currentResult}] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :rocket: :white_check_mark:")
+                }
+        }
+
+        
+    }
+}

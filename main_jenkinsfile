@@ -1,0 +1,118 @@
+pipeline {
+    agent any
+    tools {nodejs "node"}
+
+       environment {
+        API_NAME = 'api-tool-httpbin'
+        DEPLOY = 'false'
+        ICON = ":indra:"
+        TENANT= ""
+    }
+     parameters { choice(name: 'DEV_ENV', choices: ['local', 'des', 'int.atc'], description: '') 
+     }
+    stages {
+        stage('Check Deployment') {
+            steps {
+
+                withCredentials([usernamePassword(credentialsId: 'apim_dev', usernameVariable: 'DEV_USERNAME', passwordVariable: 'DEV_PASSWORD')]) {
+                    sh 'apictl login $DEV_ENV -u $DEV_USERNAME$TENANT -p $DEV_PASSWORD -k'                        
+                }
+                script{
+                if (DEV_ENV != 'local'){
+                        ICON = ':atc:'
+                }   
+                echo 'Logging into ${DEV_ENV}'
+                sh 'apictl set --vcs-deletion-enabled=false'
+                def repoUrl = checkout(scm).GIT_URL
+                def reponame = repoUrl.tokenize('/')[3]
+                reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+                echo "The reponame is: ${reponame}"
+                slackSend ( color: '#08156e', message: "INICIADO MASTER-ENTORNO [${DEV_ENV} ${ICON}]--> [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :airplane:")
+                
+                def CHANGES = sh(script: "apictl vcs status -e $DEV_ENV", returnStdout: true).trim()
+                def APIS = sh(script: "apictl vcs status -e $DEV_ENV |  grep apis | grep save |  wc -l", returnStdout: true).trim()
+                echo "DEPLOY---> ${DEPLOY}"
+                if (CHANGES != 'Everything is up-to-date'){
+                    if (APIS != "0"){    
+                        DEPLOY = 'true'
+                    }else
+                    {
+                    sh 'apictl vcs deploy -e $DEV_ENV --skipRollback=true --verbose'
+                    }
+                }else
+                {
+                    slackSend (color: '#803b0e', message: "FINALIZADO MASTER-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [NO DESPLEGADO - NO HAY CAMBIOS}] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :information_source:")
+                }
+                echo "DEPLOY---> ${DEPLOY}"
+                echo "CHANGES---> ${CHANGES}"
+                }
+            }
+        }
+    stage('Deployment') {
+            when {
+              expression { DEPLOY == 'true' }
+             }
+            
+            steps {
+                script{
+                def APIS = sh(script: "apictl vcs status -e $DEV_ENV  | grep apis |awk -F: \'{print \$3}\' | sed 's/ //g' | cut -d'.' -f1 |tr --delete '\n' ", returnStdout: true).trim()
+                def m =  APIS.replace("(apis/", "").replace(")", " ")
+                echo "APIS---> ${m}"
+                def arr = m.split(" ")
+                    for (i in arr) {
+                         echo "APIS---> ${i}"
+                        def API_VER = "${i}".replace("$API_NAME", "").replace("-", "")
+                    echo "DEV_ENV---> $DEV_ENV"
+                    echo "API_VER---> $API_VER"
+                        build job:"${i}", parameters: [
+                              string(name: 'DEV_ENV', value: "$DEV_ENV"),
+                              string(name: 'API_VER', value: "$API_VER")
+                        ]
+                    println "now got ${i}"
+                
+                        }
+                }
+            }
+             post {
+        success {
+            withCredentials([usernamePassword(credentialsId: 'apim_dev', usernameVariable: 'DEV_USERNAME', passwordVariable: 'DEV_PASSWORD')]) {
+                    sh 'apictl login $DEV_ENV -u $DEV_USERNAME$TENANT -p $DEV_PASSWORD -k'                        
+                }
+               script {
+                def repoUrl = checkout(scm).GIT_URL
+                def reponame = repoUrl.tokenize('/')[3]
+                reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+                    sh 'apictl vcs deploy -e $DEV_ENV --skipRollback=true'
+                    sh 'apictl logout $DEV_ENV -k'
+                        slackSend (color: '#053605', message: "FINALIZADO MASTER-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [${currentBuild.currentResult}] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :white_check_mark:")
+                }
+             }
+             }
+
+        }
+        
+    }
+    post {
+
+        failure {
+            script{
+                echo 'Logging into ${DEV_ENV}'
+                def repoUrl = checkout(scm).GIT_URL
+                def reponame = repoUrl.tokenize('/')[3]
+                reponame = reponame.substring(0, reponame.lastIndexOf('.')) //Remove .git
+            slackSend (color: '#ee0a0a', message: "FINALIZADO MASTER-ENTORNO [${DEV_ENV} ${ICON}]--> ESTADO [${currentBuild.currentResult}] [Proyecto API: ${reponame}] [JOB: ${env.JOB_NAME}] [NUMERO: ${env.BUILD_NUMBER}][ URL: (${env.BUILD_URL})] :red_circle:")
+            }
+        }
+        cleanup {
+
+            deleteDir()
+            dir("${workspace}@tmp") {
+                deleteDir()
+            }
+            dir("${workspace}@script") {
+                deleteDir()
+            }
+        }
+        
+    }
+}
