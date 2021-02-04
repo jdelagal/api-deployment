@@ -1,7 +1,6 @@
 pipeline {
     agent any
-    //tools {nodejs "node"}
-    tool name: 'nodejs'
+    tools {nodejs "node"}
 
        environment {
         API_NAME = 'api-tool-httpbin'
