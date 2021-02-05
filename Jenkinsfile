@@ -16,6 +16,9 @@ pipeline {
     }
     stage('Run') {
       steps {
+        sh 'docker run rm -f toolkit_running'
+      }
+      steps {
         sh 'docker run -d --name toolkit_running -u root -it toolkit'
       }
     }
