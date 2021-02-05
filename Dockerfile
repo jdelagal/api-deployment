@@ -21,16 +21,17 @@ RUN \
 ADD root/.bashrc /root/.bashrc
 ADD root/.gitconfig /root/.gitconfig
 ADD root/.scripts /root/.scripts
-
+ADD apictl /root/apictl
 
 # Install Node
 RUN \
   curl -sL https://deb.nodesource.com/setup_15.x| sudo -E bash - && \
   sudo apt-get install -y nodejs
 
-
 RUN npm install -g @stoplight/spectral
 RUN npm install -g @stoplight/prism-cli
+
+RUN chmod +x /root/apictl/script.sh
 
 # Set environment variables.
 ENV HOME /root
