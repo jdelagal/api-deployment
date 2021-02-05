@@ -28,6 +28,8 @@ RUN \
   curl -sL https://deb.nodesource.com/setup_15.x| sudo -E bash - && \
   sudo apt-get install -y nodejs
 
+RUN npm install -g @stoplight/spectral
+
 # Set environment variables.
 ENV HOME /root
 
