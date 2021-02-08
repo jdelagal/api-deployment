@@ -22,6 +22,7 @@ pipeline {
     }
     stage('Check Deployment') {
       steps {
+        sh 'docker network connect apim-with-analytics_default toolkit_running'
         sh 'docker exec -i toolkit_running bash -c ./script.sh' 
       }
     }
