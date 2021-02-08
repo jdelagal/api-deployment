@@ -3,9 +3,10 @@ pipeline {
   stages {
     stage('Example') {
       steps {
-        echo "Hello"
+        echo 'Hello'
       }
     }
+
     stage('Build') {
       environment {
         CI = 'true'
@@ -14,17 +15,20 @@ pipeline {
         sh 'docker build -t toolkit -f Dockerfile .'
       }
     }
+
     stage('Run') {
       steps {
         sh 'docker rm -f toolkit_running'
         sh 'docker run -d --name toolkit_running -u root -it toolkit'
       }
     }
+
     stage('Check Deployment') {
       steps {
         sh 'docker network connect apim-with-analytics_default toolkit_running'
-        sh 'docker exec -i toolkit_running bash -c ./script.sh' 
+        sh 'docker exec -i toolkit_running bash -c ./script.sh'
       }
     }
+
   }
 }
