@@ -21,7 +21,7 @@ RUN \
 ADD root/.bashrc /root/.bashrc
 ADD root/.gitconfig /root/.gitconfig
 ADD root/.scripts /root/.scripts
-ADD apictl /root/apictl
+ADD apictl /root
 
 # Install Node
 RUN \
@@ -32,7 +32,7 @@ RUN npm install -g @stoplight/spectral
 RUN npm install -g @stoplight/prism-cli
 RUN npm install -g newman
 
-RUN chmod +x /root/apictl/script.sh
+RUN chmod +x /root/script.sh
 
 # Set environment variables.
 ENV HOME /root

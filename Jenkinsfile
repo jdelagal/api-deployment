@@ -22,8 +22,7 @@ pipeline {
     }
     stage('Check Deployment') {
       steps {
-        sh 'cd apictl' 
-        sh './script.sh' 
+        sh 'docker exec -i toolkit_running bash -c ./script.sh' 
       }
     }
   }
