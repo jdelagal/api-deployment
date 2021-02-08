@@ -23,9 +23,7 @@ pipeline {
     stage('Check Deployment') {
       steps {
         sh 'cd apictl' 
-        sh 'sudo -i' 
-        sh './apictl login dev -u admin -p admin -k' 
-        sh './apictl list apis -e dev -k' 
+        sh './script.sh' 
       }
     }
   }
