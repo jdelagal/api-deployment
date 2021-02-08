@@ -30,6 +30,7 @@ RUN \
 
 RUN npm install -g @stoplight/spectral
 RUN npm install -g @stoplight/prism-cli
+RUN npm install -g newman
 
 RUN chmod +x /root/apictl/script.sh
 
