@@ -22,6 +22,9 @@
   "paths": {
     "/getEntitat/COMUN": {
       "get": {
+        "tags": [
+          "Consulta"
+        ],
         "description": "Consulta d'entitats COUMUN mitjançant verb get",
         "summary": "Consulta d'entitats COUMUN mitjançant verb get",
         "operationId": "getEntitat-COMUN",
@@ -204,12 +207,15 @@
         ],
         "description": "consulta de entidade PERSONE mitjançant verb get",
         "tags": [
-          "PERSONES"
+          "Consulta"
         ]
       }
     },
     "/getEntitat/DADESCONTACTE": {
       "get": {
+        "tags": [
+          "Consulta"
+        ],
         "summary": "Consulta d'entitats DADESCONTACTE mitjançant verb get",
         "operationId": "getEntitat-DADESCONTACTE",
         "responses": {
@@ -348,7 +354,7 @@
         ],
         "description": "consulta de entidade ADRECES mitjançant verb get",
         "tags": [
-          "ADRECES"
+          "Consulta"
         ]
       }
     },
@@ -383,7 +389,7 @@
         ],
         "description": "consulta de entidade PERSONES_ADRECES mitjançant verb get",
         "tags": [
-          "PERSONES_ADRECES"
+          "Consulta"
         ]
       }
     },
@@ -517,7 +523,7 @@
         ],
         "description": "consulta de entidade RELACIONSPERSONES mitjançant verb get",
         "tags": [
-          "RELACIONSPERSONES"
+          "Consulta"
         ]
       }
     },
@@ -552,7 +558,7 @@
         ],
         "description": "consulta de entidade REQUERIMENTS mitjançant verb get",
         "tags": [
-          "REQUERIMENTS"
+          "Consulta"
         ]
       }
     },
@@ -730,7 +736,7 @@
         ],
         "description": "consulta de entidade TRAMITACIONS mitjançant verb get",
         "tags": [
-          "TRAMITACIONS"
+          "Consulta"
         ]
       }
     },
@@ -776,7 +782,7 @@
         ],
         "description": "consulta de entidade ENTITATSPERSONES mitjançant verb get",
         "tags": [
-          "ENTITATSPERSONES"
+          "Consulta"
         ]
       }
     },
@@ -811,7 +817,7 @@
         ],
         "description": "consulta de entidade EXPEDIENTS mitjançant verb get",
         "tags": [
-          "ENTITATSPERSONES"
+          "Consulta"
         ]
       }
     },
@@ -868,7 +874,7 @@
         ],
         "description": "consulta de entidade PRESENTACIONS mitjançant verb get",
         "tags": [
-          "PRESENTACIONS"
+          "Consulta"
         ]
       }
     },
@@ -991,7 +997,7 @@
         ],
         "description": "consulta de entidade DEUTES mitjançant verb get",
         "tags": [
-          "DEUTES"
+          "Consulta"
         ]
       }
     },
@@ -1059,12 +1065,15 @@
         ],
         "description": "consulta de entidade DADAREFERENCIA mitjançant verb get",
         "tags": [
-          "DADAREFERENCIA"
+          "Consulta"
         ]
       }
     },
     "/getEntitat/RELACIODADAREFERENCIA": {
       "get": {
+        "tags": [
+          "Consulta"
+        ],
         "summary": "Consulta d'entitats RELACIODADAREFERENCIA mitjançant verb get",
         "operationId": "getEntitat-RELACIODADAREFERENCIA",
         "responses": {
@@ -1141,6 +1150,9 @@
     },
     "/getEntitat/INGRESSOS": {
       "get": {
+        "tags": [
+          "Consulta"
+        ],
         "summary": "Consulta d'entitats INGRESSOS mitjançant verb get",
         "operationId": "getEntitat-INGRESSOS",
         "responses": {
@@ -1257,7 +1269,7 @@
         ],
         "description": "consulta de entidade DOCUMENTSRELACIONATS mitjançant verb get",
         "tags": [
-          "DOCUMENTSRELACIONATS"
+          "Consulta"
         ]
       }
     },
@@ -1369,7 +1381,7 @@
         ],
         "description": "consulta de entidade DEVOLUCIONS mitjançant verb get",
         "tags": [
-          "DEVOLUCIONS"
+          "Consulta"
         ]
       }
     },
@@ -1404,7 +1416,7 @@
         ],
         "description": "consulta de entidade PROPAGACIORELACIONSPERSONES mitjançant verb get",
         "tags": [
-          "PROPAGACIORELACIONSPERSONES"
+          "Consulta"
         ]
       }
     },
@@ -1505,7 +1517,7 @@
         ],
         "description": "consulta de entidade PAGAMENTDEUTES mitjançant verb get",
         "tags": [
-          "PAGAMENTDEUTES"
+          "Consulta"
         ]
       }
     },
@@ -1540,7 +1552,7 @@
         ],
         "description": "consulta de entidade PROPAGACIOADRECES mitjançant verb get",
         "tags": [
-          "PROPAGACIOADRECES"
+          "Consulta"
         ]
       }
     },
@@ -1630,7 +1642,7 @@
         ],
         "description": "consulta de entidade NOTIFICACIONS mitjançant verb get",
         "tags": [
-          "NOTIFICACIONS"
+          "Consulta"
         ]
       }
     },
@@ -1753,7 +1765,7 @@
         ],
         "description": "consulta de entidade AJORNAMENTSFRACCIONAMENTS mitjançant verb get",
         "tags": [
-          "AJORNAMENTSFRACCIONAMENTS"
+          "Consulta"
         ]
       }
     },
@@ -1898,7 +1910,7 @@
         ],
         "description": "consulta de entidade CALENDARI mitjançant verb get",
         "tags": [
-          "CALENDARI"
+          "Consulta"
         ]
       }
     },
@@ -2087,7 +2099,7 @@
         ],
         "description": "consulta de entidade PADROVEHICLES mitjançant verb get",
         "tags": [
-          "PADROVEHICLES"
+          "Consulta"
         ]
       }
     },
@@ -2276,7 +2288,7 @@
         ],
         "description": "consulta de entidade PADROVEHICLES_LLISTAT mitjançant verb get",
         "tags": [
-          "PADROVEHICLES_LLISTAT"
+          "Consulta"
         ]
       }
     },
@@ -2377,7 +2389,7 @@
         ],
         "description": "consulta de entidade CONTROLACCESSOS mitjançant verb get",
         "tags": [
-          "CONTROLACCESSOS"
+          "Consulta"
         ]
       }
     },
@@ -2544,7 +2556,7 @@
         ],
         "description": "consulta de entidade ALEGACIONSPADROVEHICLES mitjançant verb get",
         "tags": [
-          "CONTROLACCESSOS"
+          "Consulta"
         ]
       }
     },
@@ -2722,7 +2734,7 @@
         ],
         "description": "consulta de entidade DOMICILIACIONS mitjançant verb get",
         "tags": [
-          "CONTROLACCESSOS"
+          "Consulta"
         ]
       }
     },
@@ -2757,7 +2769,7 @@
         ],
         "description": "consulta de entidade PROPAGACIOPERSONES mitjançant verb get",
         "tags": [
-          "PROPAGACIOPERSONES"
+          "Consulta"
         ]
       }
     },
@@ -2792,7 +2804,7 @@
         ],
         "description": "consulta de entidade PROPAGACIODADESCONTACTE mitjançant verb get",
         "tags": [
-          "PROPAGACIODADESCONTACTE"
+          "Consulta"
         ]
       }
     },
@@ -2893,7 +2905,7 @@
         ],
         "description": "consulta de entidade SANCIONS mitjançant verb get",
         "tags": [
-          "PROPAGACIODADESCONTACTE"
+          "Consulta"
         ]
       }
     },
@@ -2928,7 +2940,7 @@
         ],
         "description": "consulta de entidade ESTABLIMENTSTURISTICS mitjançant verb get",
         "tags": [
-          "PROPAGACIODADESCONTACTE"
+          "Consulta"
         ]
       }
     },
@@ -2974,7 +2986,7 @@
         ],
         "description": "consulta de entidade PERSONESRELACIONS mitjançant verb get",
         "tags": [
-          "PERSONESRELACIONS"
+          "Consulta"
         ]
       }
     },
@@ -3086,7 +3098,7 @@
         ],
         "description": "consulta de entidade PERSONESENTITATS mitjançant verb get",
         "tags": [
-          "PERSONESENTITATS"
+          "Consulta"
         ]
       }
     },
@@ -3264,7 +3276,7 @@
         ],
         "description": "consulta de entidade PADROVEHICLESFINAL mitjançant verb get",
         "tags": [
-          "PADROVEHICLESFINAL"
+          "Consulta"
         ]
       }
     },
@@ -3343,7 +3355,7 @@
         ],
         "description": "consulta de entidade ACTESINSPECCIO mitjançant verb get",
         "tags": [
-          "ACTESINSPECCIO"
+          "Consulta"
         ]
       }
     },
@@ -3433,12 +3445,15 @@
         ],
         "description": "consulta de entidade RECURSOS mitjançant verb get",
         "tags": [
-          "RECURSOS"
+          "Consulta"
         ]
       }
     },
     "/postEntitatNeg": {
       "post": {
+        "tags": [
+          "Consulta"
+        ],
         "summary": "Consulta d'entitats mitjançant verb post",
         "operationId": "postEntitatNeg",
         "responses": {
@@ -10575,112 +10590,7 @@
   },
   "tags": [
     {
-      "name": "ACTESINSPECCIO"
-    },
-    {
-      "name": "ADRECES"
-    },
-    {
-      "name": "AJORNAMENTSFRACCIONAMENTS"
-    },
-    {
-      "name": "ALEGACIONSPADROVEHICLES"
-    },
-    {
-      "name": "CALENDARI"
-    },
-    {
-      "name": "COMU"
-    },
-    {
-      "name": "CONTROLACCESSOS"
-    },
-    {
-      "name": "DADAREFERENCIA"
-    },
-    {
-      "name": "DEUTES"
-    },
-    {
-      "name": "DEVOLUCIONS"
-    },
-    {
-      "name": "DOCUMENTSRELACIONATS"
-    },
-    {
-      "name": "DOMICILIACIONS"
-    },
-    {
-      "name": "ENTITATSPERSONES"
-    },
-    {
-      "name": "ESTABLIMENTSTURISTICS"
-    },
-    {
-      "name": "EXPEDIENTS"
-    },
-    {
-      "name": "INGRESSOS"
-    },
-    {
-      "name": "NOTIFICACIONS"
-    },
-    {
-      "name": "PADROVEHICLES"
-    },
-    {
-      "name": "PADROVEHICLES_LLISTAT"
-    },
-    {
-      "name": "PADROVEHICLESFINAL"
-    },
-    {
-      "name": "PAGAMENTDEUTES"
-    },
-    {
-      "name": "PERSONES"
-    },
-    {
-      "name": "PERSONES_ADRECES"
-    },
-    {
-      "name": "PERSONESENTITATS"
-    },
-    {
-      "name": "PERSONESRELACIONS"
-    },
-    {
-      "name": "PRESENTACIONS"
-    },
-    {
-      "name": "PROPAGACIOADRECES"
-    },
-    {
-      "name": "PROPAGACIODADESCONTACTE"
-    },
-    {
-      "name": "PROPAGACIOPERSONES"
-    },
-    {
-      "name": "PROPAGACIORELACIONSPERSONES"
-    },
-    {
-      "name": "RECURSOS"
-    },
-    {
-      "name": "RELACIONSPERSONES"
-    },
-    {
-      "name": "REQUERIMENTS"
-    },
-    {
-      "name": "SANCIONS"
-    },
-    {
-      "name": "TRAMITACIONS"
-    },
-    {
-      "name": "TRAMITS_ICA"
+      "name": "Consulta"
     }
   ]
 }
